@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./auth/Login";
+import Login from "./login/Login";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
