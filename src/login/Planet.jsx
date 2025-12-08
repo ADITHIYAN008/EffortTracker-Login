@@ -1,87 +1,149 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export function Planet({
   role,
   description,
-  color,
+  glowColor,
+  path,
   angle,
   orbitRadius,
   size,
   rotationDuration,
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [dynamicSide, setDynamicSide] = useState("right");
+  const planetRef = useRef(null);
 
   const x = Math.cos((angle * Math.PI) / 180) * orbitRadius;
   const y = Math.sin((angle * Math.PI) / 180) * orbitRadius;
 
+  useEffect(() => {
+    function updateSide() {
+      if (!planetRef.current) return;
+      const rect = planetRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+
+      const screenCenter = window.innerWidth / 2;
+      setDynamicSide(centerX > screenCenter ? "right" : "left");
+    }
+
+    updateSide();
+    const interval = setInterval(updateSide, 300);
+    window.addEventListener("resize", updateSide);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("resize", updateSide);
+    };
+  }, []);
+
   return (
-    <motion.div
-      className="absolute"
-      style={{
-        left: "50%",
-        top: "50%",
-      }}
-      animate={{
-        x: [x, Math.cos(((angle + 360) * Math.PI) / 180) * orbitRadius],
-        y: [y, Math.sin(((angle + 360) * Math.PI) / 180) * orbitRadius],
-      }}
-      transition={{
-        duration: rotationDuration,
-        repeat: Infinity,
-        ease: "linear",
-      }}
-    >
-      <div
-        className="relative"
+    <>
+      <motion.div
+        className={`fixed top-10 h-auto flex flex-col gap-7  text-center bg-white/2 rounded-xl backdrop-blur-xl border border-blue-200/70 shadow-xl p-6 pointer-events-none
+    ${dynamicSide === "left" ? "left-10" : "right-10"}`}
+        initial={false}
+        animate={{ opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
+        style={{ width: "380px" }}
+      >
+        <motion.h2
+          className={`text-xl font-bold  underline`}
+          style={{ color: `${glowColor}` }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -10 }}
+          transition={{ duration: 0.25 }}
+        >
+          {role}
+        </motion.h2>
+
+        <motion.div
+          className="flex flex-col gap-4"
+          initial="hidden"
+          animate={isHovered ? "visible" : "hidden"}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.5,
+                ease: [0.25, 0.1, 0.25, 1],
+              },
+            },
+          }}
+        >
+          {description.map((line, i) => (
+            <motion.p
+              key={i}
+              className="text-sm tracking-wider"
+              style={{
+                color: glowColor,
+                opacity: 0.5,
+                filter: `drop-shadow(0 0 6px ${glowColor}60)`,
+              }}
+              variants={{
+                hidden: { opacity: 0, y: -10 },
+                visible: {
+                  opacity: 0.6,
+                  y: 0,
+                  transition: {
+                    duration: 1.4,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  },
+                },
+              }}
+            >
+              {line}
+            </motion.p>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="absolute"
         style={{
-          width: `${size}px`,
-          height: `${size}px`,
-          marginLeft: `-${size / 2}px`,
-          marginTop: `-${size / 2}px`,
+          left: "50%",
+          top: "50%",
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        animate={{
+          x: [x, Math.cos(((angle + 360) * Math.PI) / 180) * orbitRadius],
+          y: [y, Math.sin(((angle + 360) * Math.PI) / 180) * orbitRadius],
+        }}
+        transition={{
+          duration: rotationDuration,
+          repeat: Infinity,
+          ease: "linear",
+        }}
       >
         <motion.div
-          className="w-full h-full rounded-full cursor-pointer relative"
+          ref={planetRef}
+          className="relative"
           style={{
-            background: color,
-            boxShadow: `0 0 20px ${color}`,
+            width: `${size}px`,
+            height: `${size}px`,
+            marginLeft: `-${size / 2}px`,
+            marginTop: `-${size / 2}px`,
           }}
-          whileHover={{ scale: 1.3 }}
-          transition={{ duration: 0.3 }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 1.1 }}
         >
-          <div
-            className="absolute flex items-center justify-center inset-0 rounded-full opacity-100"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 70%)",
+          <motion.img
+            className="cursor-pointer object-cover"
+            style={{ filter: `drop-shadow(0 0 10px ${glowColor})` }}
+            src={path}
+            alt=""
+            animate={{ rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              ease: "linear",
+              duration: 25,
             }}
-          >
-            <h2 className="text-black text-shadow-2xs uppercase text-[10px] font-bold">
-              {role}
-            </h2>
-          </div>
+          />
         </motion.div>
-
-        {isHovered && (
-          <motion.div
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 px-4 py-3 rounded-2xl backdrop-blur-md bg-white/10 border border-white/20 shadow-xl min-w-[240px] z-50"
-            initial={{ opacity: 0, y: 10, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="text-center">
-              <h3 className="text-white mb-1">{role}</h3>
-              <p className="text-white/80 text-sm">{description}</p>
-            </div>
-
-            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white/10" />
-          </motion.div>
-        )}
-      </div>
-    </motion.div>
+      </motion.div>
+    </>
   );
 }

@@ -1,0 +1,90 @@
+export const MY_PROFILE = {
+  name: "Justin Bieber",
+  email: "justin.bieber@tcs.com",
+  role: "Manager",
+  img: "https://cdn.expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-fake-smile.jpg",
+  location: "Chennai, India",
+  joined: "Jan 2023",
+  department: "IT",
+  empId: "123456",
+  reportingTo: "John Doe(Head)",
+  performanceScore: 94,
+  appreciations: 12,
+  badges: 6,
+  experience: 6.5,
+  task: {
+    total: 50,
+    completed: 42,
+  },
+  hours: {
+    total: 200,
+    logged: 156,
+  },
+  projectsInvolved: {
+    total: 8,
+    completed: 7,
+  },
+  oneTimeDelivery: 98,
+  avgRating: 4.8,
+  career: [
+    {
+      role: "Manager",
+      dept: "Engineering",
+      desc: "Leading a team of 15+ developers and ensuring project delivery excellence.",
+      period: "2024 – Present",
+    },
+    {
+      role: "Senior Developer",
+      dept: "Engineering",
+      desc: "Led multiple high-impact projects and mentored junior developers.",
+      period: "2022 – 2024",
+    },
+    {
+      role: "Developer",
+      dept: "Engineering",
+      desc: "Contributed to core product features and maintained critical systems.",
+      period: "2020 – 2022",
+    },
+    {
+      role: "Associate Developer",
+      dept: "Engineering",
+      desc: "Started career journey, learned fundamental development practices.",
+      period: "2019 – 2020",
+    },
+  ],
+  achievements: [
+    {
+      title: "Innovation Champion",
+      desc: "Implemented groundbreaking feature",
+      date: "Nov 2025",
+    },
+    {
+      title: "Team Player",
+      desc: "Outstanding collaboration",
+      date: "Oct 2025",
+    },
+    {
+      title: "Mentor",
+      desc: "Guided 5+ team members",
+      date: "Jan 2025",
+    },
+    {
+      title: "Customer Focus",
+      desc: "Excellent client feedback",
+      date: "Jul 2024",
+    },
+  ],
+  ratings: [
+    { title: "Technical Skills", rating: 4.8 },
+    { title: "Communication", rating: 4.6 },
+    { title: "Leadership", rating: 4.9 },
+    { title: "Problem Solving", rating: 4.7 },
+    { title: "Teamwork", rating: 5.0 },
+  ],
+  points: {
+    total: 1847,
+    month: 245,
+    quarter: 687,
+    year: 1847,
+  },
+};

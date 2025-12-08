@@ -3,20 +3,37 @@ import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../api/auth";
+import Cookies from "js-cookie";
 
 export function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // 🔥 NEW
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // 🔥 Start loading
+
     try {
       const res = await login(username, password);
-      localStorage.setItem("token", res.data.token);
+
+      if (!res.data.token) {
+        alert("No token received from server");
+        setLoading(false);
+        return;
+      }
+
+      Cookies.set("token", res.data.token, {
+        expires: 7,
+        secure: true,
+        sameSite: "strict",
+      });
+
       navigate("/dashboard");
     } catch (error) {
       alert("Invalid username or password");
+      setLoading(false); // 🔥 End loading
     }
   };
 
@@ -40,7 +57,7 @@ export function LoginModal({ isOpen, onClose }) {
               exit={{ opacity: 0, scale: 0.8, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
             >
-              <div className="relative rounded-3xl backdrop-blur-xl bg-gradient-to-br from-white/20 to-white/5 border border-white/20 shadow-2xl p-8">
+              <div className="relative rounded-3xl backdrop-blur-xl bg-gradient-to-br from-black/50 to-black/50 border border-white/60 shadow-2xl p-8">
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-xl -z-10" />
 
                 <button
@@ -114,12 +131,19 @@ export function LoginModal({ isOpen, onClose }) {
                     />
                   </motion.div>
 
+                  {/* BUTTON WITH LOADING */}
                   <motion.button
                     type="submit"
-                    className="relative w-full py-3 rounded-2xl cursor-pointer bg-white  text-black hover:bg-white/90 transition"
+                    disabled={loading}
+                    className={`relative w-full py-3 rounded-2xl cursor-pointer bg-white text-black transition ${
+                      loading
+                        ? "opacity-60 cursor-not-allowed"
+                        : "hover:bg-white/90"
+                    }`}
                   >
-                    <motion.div className="absolute inset-0 bg-black opacity-0 cursor-pointer blur-xl transition-opacity" />
-                    <span className="relative z-10">Sign In</span>
+                    <span className="relative z-10">
+                      {loading ? "Verifying..." : "Sign In"}
+                    </span>
                   </motion.button>
                 </form>
 

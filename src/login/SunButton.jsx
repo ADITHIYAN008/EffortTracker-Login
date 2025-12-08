@@ -50,8 +50,8 @@ export function SunButton({ onClick }) {
       >
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-yellow-200/50 to-transparent" />
         <div className="absolute inset-4 rounded-full bg-gradient-to-br from-white/30 to-transparent blur-sm" />
-        <span className="relative z-10 text-white/90 tracking-wider">
-          LOGIN
+        <span className="relative z-10 text-yellow-700 font-bold text-shadow-md tracking-wider">
+          IGNITE
         </span>
       </motion.button>
     </div>
