@@ -2,18 +2,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../api/auth";
+import { login } from "../api";
 import Cookies from "js-cookie";
 
 export function LoginModal({ isOpen, onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // 🔥 NEW
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // 🔥 Start loading
+    setLoading(true);
 
     try {
       const res = await login(username, password);
@@ -33,7 +33,7 @@ export function LoginModal({ isOpen, onClose }) {
       navigate("/dashboard");
     } catch (error) {
       alert("Invalid username or password");
-      setLoading(false); // 🔥 End loading
+      setLoading(false);
     }
   };
 

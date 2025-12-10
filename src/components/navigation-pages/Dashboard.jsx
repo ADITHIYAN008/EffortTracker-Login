@@ -2,16 +2,17 @@ import CountUp from "react-countup";
 import { IoIosTrendingUp } from "react-icons/io";
 import { MdAccessTime, MdTaskAlt } from "react-icons/md";
 import { SlBadge } from "react-icons/sl";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function Dashboard() {
+  const { user } = useContext(AuthContext);
   return (
     <div className="bg-white mx-3 overflow-scroll">
       <div>
         <div>
-          <h1 className="text-2xl font-bold">Welcome back, John Doe</h1>
-          <p className="text-[13px] text-black/50">
-            Here's what's happening your team today.
-          </p>
+          <h1 className="text-2xl font-bold">Welcome back, {user?.username}</h1>
+          <p className="text-[13px] text-black/50">{user?.role}</p>
         </div>
         <div className="mt-5 mb-5 flex justify-between">
           <div className="w-[24%] h-35 rounded-2xl border border-black/20 p-6">
