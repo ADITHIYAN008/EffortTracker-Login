@@ -1,31 +1,16 @@
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import Sidebar from "../main/Sidebar";
 import Topbar from "../main/Topbar";
-import Dashboard from "../navigation-pages/Dashboard";
-import Calendar from "../navigation-pages/Calendar";
-import Team from "../navigation-pages/Team";
-import Profile from "../navigation-pages/Profile";
-import Report from "../navigation-pages/Report";
 import ThreeDotsLoader from "../../util/ThreeDotsLoader";
 
 export default function DashboardLayout() {
-  const [isOpen, setIsOpen] = useState(() => {
-    return localStorage.getItem("currentPage") || "dashboard";
-  });
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2200);
-
+    const timer = setTimeout(() => setLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("currentPage", isOpen);
-  }, [isOpen]);
 
   return (
     <div className="h-screen w-full flex overflow-hidden">
@@ -36,7 +21,7 @@ export default function DashboardLayout() {
       ) : (
         <>
           <div className="w-56 fixed left-0 top-0 h-screen">
-            <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+            <Sidebar />
           </div>
 
           <div className="flex-1 ml-56 flex flex-col h-screen">
@@ -45,11 +30,7 @@ export default function DashboardLayout() {
             </div>
 
             <main className="flex-1 mt-[70px] hide-scrollbar overflow-y-auto p-4">
-              {isOpen === "dashboard" && <Dashboard />}
-              {isOpen === "calendar" && <Calendar />}
-              {isOpen === "team" && <Team />}
-              {isOpen === "profile" && <Profile />}
-              {isOpen === "reports" && <Report />}
+              <Outlet />
             </main>
           </div>
         </>

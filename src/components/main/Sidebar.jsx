@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaRegCalendar } from "react-icons/fa";
 import { FiCoffee } from "react-icons/fi";
 import { GoPerson } from "react-icons/go";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { TbLogout2, TbReportSearch } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Sidebar({ isOpen, setIsOpen }) {
+function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const current = location.pathname;
 
   const handleLogout = () => {
     Cookies.remove("token");
     navigate("/auth/login");
   };
+
+  const menu = [
+    { label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
+    { label: "Calendar", icon: <FaRegCalendar />, path: "/calendar" },
+    { label: "Team", icon: <BsFillPeopleFill />, path: "/team" },
+    { label: "Profile", icon: <GoPerson />, path: "/profile" },
+    { label: "Reports", icon: <TbReportSearch />, path: "/reports" },
+  ];
 
   return (
     <div className="w-56 border-r-[1px] border-black/30 h-screen py-2 flex flex-col justify-between">
@@ -28,87 +39,31 @@ function Sidebar({ isOpen, setIsOpen }) {
         </div>
 
         <div className="flex flex-col gap-2 items-center p-3 text-center">
-          <div
-            onClick={() => setIsOpen("dashboard")}
-            className={`${
-              isOpen === "dashboard"
-                ? "bg-black text-white"
-                : " hover:bg-gray-100"
-            } 
-              w-full cursor-pointer rounded-md`}
-          >
-            <div className="flex items-center py-2 ml-6 gap-2">
-              <LuLayoutDashboard />
-              <h3 className="text-sm">Dashboard</h3>
-            </div>
-          </div>
+          {menu.map((item, index) => {
+            const isActive = current.startsWith(item.path);
 
-          <div
-            onClick={() => setIsOpen("calendar")}
-            className={`${
-              isOpen === "calendar"
-                ? "bg-black text-white"
-                : " hover:bg-gray-100"
-            } 
-              w-full cursor-pointer rounded-md `}
-          >
-            {" "}
-            <div className="flex items-center py-2 ml-6 gap-2">
-              <FaRegCalendar />
-
-              <h3 className="text-sm">Calendar</h3>
-            </div>
-          </div>
-
-          <div
-            onClick={() => setIsOpen("team")}
-            className={`${
-              isOpen === "team" ? "bg-black text-white" : " hover:bg-gray-100"
-            } 
-              w-full cursor-pointer rounded-md `}
-          >
-            <div className="flex items-center py-2 ml-6 gap-2">
-              <BsFillPeopleFill size={20} />
-
-              <h3 className="text-sm">Team</h3>
-            </div>
-          </div>
-
-          <div
-            onClick={() => setIsOpen("profile")}
-            className={`${
-              isOpen === "profile"
-                ? "bg-black text-white"
-                : " hover:bg-gray-100"
-            } 
-              w-full cursor-pointer rounded-md `}
-          >
-            <div className="flex items-center py-2 ml-6 gap-2">
-              <GoPerson size={20} />
-
-              <h3 className="text-sm">Profile</h3>
-            </div>
-          </div>
-
-          <div
-            onClick={() => setIsOpen("reports")}
-            className={`${
-              isOpen === "reports" ? "bg-black text-white" : "hover:bg-gray-100"
-            } 
-              w-full cursor-pointer rounded-md `}
-          >
-            <div className="flex items-center py-2 ml-6 gap-2">
-              <TbReportSearch size={20} />
-              <h3 className="text-sm">Reports</h3>
-            </div>
-          </div>
+            return (
+              <div
+                key={index}
+                onClick={() => navigate(item.path)}
+                className={`${
+                  isActive ? "bg-black text-white" : "hover:bg-gray-100"
+                } w-full cursor-pointer rounded-md`}
+              >
+                <div className="flex items-center py-2 ml-6 gap-2">
+                  {item.icon}
+                  <h3 className="text-sm">{item.label}</h3>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
       <div className="text-center">
         <div
           onClick={handleLogout}
-          className="bg-black/80 text-white mx-6 rounded-md flex items-center justify-center flex-row-reverse gap-10 py-2 cursor-pointer hover:bg-black transition-all duration-200 ease-in-oute mb-5"
+          className="bg-black/80 text-white mx-6 rounded-md flex items-center justify-center flex-row-reverse gap-10 py-2 cursor-pointer hover:bg-black transition-all duration-200 ease-in-out mb-5"
         >
           <TbLogout2 />
           Logout
