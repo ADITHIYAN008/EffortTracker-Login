@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MY_PROFILE as profile } from "../../../json/Profile";
 import { FiMail } from "react-icons/fi";
 import { FaLocationDot, FaRegCalendar, FaRegStar } from "react-icons/fa6";
@@ -11,9 +11,11 @@ import Overview from "../profile/Overview";
 import Achievements from "../profile/Achievements";
 import CareerHistory from "../profile/CareerHistory";
 import Performance from "../profile/Performance";
+import { AuthContext } from "../../context/AuthContext";
 
 function Profile() {
   const [activeTab, setActiveTab] = useState("Overview");
+  const { user } = useContext(AuthContext);
   return (
     <div className="px-6 ">
       <div className="flex justify-between border p-5 rounded-xl shadow-md border-black/20">
@@ -26,7 +28,7 @@ function Profile() {
             />
           </div>
           <div className="flex flex-col mt-2 gap-2">
-            <h2 className="text-2xl font-semibold">{profile.name}</h2>
+            <h2 className="text-2xl font-semibold">{user.name}</h2>
             <div className="flex items-center">
               <h2 className="text-sm text-black/50">{profile.role}</h2>
               <BsDot className="text-black/50" size={22} />

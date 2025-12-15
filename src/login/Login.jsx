@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BackgroundStars } from "./backgroundStar";
 import { SunButton } from "./SunButton";
 import PlanetsData from "../../json/Planets.json";
@@ -18,14 +18,43 @@ const planets = PlanetsData.map((p, index) => ({
 
 export default function Login() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [orbitRadius, setOrbitRadius] = useState(200);
+  const [size, setSize] = useState(0);
+
+  const calcRadius = () => {
+    if (window.innerWidth > 1356) {
+      setOrbitRadius(280);
+    } else {
+      setOrbitRadius(200);
+    }
+  };
+
+  const calcSize = () => {
+    if (window.innerWidth > 1356) {
+      setSize(20);
+    } else {
+      setSize(0);
+    }
+  };
+
+  useEffect(() => {
+    calcRadius();
+    calcSize();
+    window.addEventListener("resize", calcRadius);
+    window.addEventListener("resize", calcSize);
+    return () => {
+      window.removeEventListener("resize", calcRadius);
+      window.removeEventListener("resize", calcSize);
+    };
+  }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-white text-black bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white">
+    <div className="relative w-full min-h-screen  bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 dark:text-white">
       <BackgroundStars />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white/5" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px] rounded-full border border-white/3" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] 2xl:w-[600px] 2xl:h-[600px] rounded-full border border-white/5" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] 2xl:w-[580px] 2xl:h-[580px] rounded-full border border-white/3" />
       <div className="absolute bottom-30 right-20  text-white w-100 h-auto">
-        <h2 className="font-bold text-2xl mb-4 text-blue-300/70">
+        <h2 className="font-bold text-xl 2xl:text-2xl mb-4 text-blue-300/70">
           In the TCS Universe, Every Effort is a Star.
         </h2>
         <div className="flex gap-2 flex-col text-sm text-white/20">
@@ -41,7 +70,7 @@ export default function Login() {
           </p>
         </div>
       </div>
-      <div className="absolute animate-pulse text-black dark:text-white left-32 top-[40%] z-40 pointer-events-auto">
+      <div className="absolute animate-pulse text-black dark:text-white left-20 2xl:left-32  top-[30%] 2xl:top-[40%] z-40 pointer-events-auto">
         <div className="h-60 w-[1px] relative opacity-50 bg-blue-300">
           <div className="w-2 h-2 rounded-full bg-blue-300 absolute top-0 -left-1"></div>
           <div className="w-2 h-2 rounded-full bg-blue-300 absolute bottom-0 -left-1"></div>
@@ -73,8 +102,8 @@ export default function Login() {
               description={planet.description}
               color={planet.color}
               angle={planet.angle}
-              orbitRadius={280}
-              size={planet.size}
+              orbitRadius={orbitRadius}
+              size={planet.size + size}
               rotationDuration={20 + index * 2}
             />
           ))}

@@ -5,11 +5,10 @@
     "path": "admin",
     "glowColor": "#89CFF0",
     "description": [
-      "Admins oversee the operational backbone of the system. They are responsible for managing user accounts, assigning roles, controlling permissions, and ensuring that each department functions within the proper access boundaries.",
-      "Admins coordinate with both management and technical teams to maintain security standards and protect data integrity. They can configure modules, approve workflow changes, monitor activity logs, resolve access issues, and enforce compliance policies."
+      "Admins oversee the operational backbone of the system. They are responsible for managing user accounts, assigning roles, controlling permissions, and ensuring that each department functions within the proper access boundaries."
     ],
     "color": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    "size": 118
+    "size": 90
   },
   {
     "side": "right",
@@ -17,11 +16,10 @@
     "path": "employee",
     "glowColor": "#dbc1ac",
     "description": [
-      "Employees are the core operational users of the system. They interact directly with assigned tasks, project activities, or day-to-day processes defined by their respective departments. Their interface is streamlined to enhance productivity and simplify routine workflows.",
-      "Employees may submit work logs, track assignments, access personal dashboards, manage schedules, communicate with peers or managers, and utilize the tools necessary for their role. Their primary focus is execution — completing assigned responsibilities efficiently and accurately."
+      "Employees are the core operational users of the system. They interact directly with assigned tasks, project activities, or day-to-day processes defined by their respective departments. Their interface is streamlined to enhance productivity and simplify routine workflows."
     ],
     "color": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-    "size": 70
+    "size": 50
   },
   {
     "side": "left",
@@ -29,11 +27,10 @@
     "path": "manager",
     "glowColor": "#C11C84",
     "description": [
-      "Managers act as team leaders responsible for supervising employee activity, ensuring proper task distribution, monitoring performance, and guiding workflow execution. They play a strategic role in maintaining both productivity and team morale.",
-      "Managers can assign tasks, approve or reject submissions, review reports, track progress, oversee deadlines, and identify areas requiring improvement. They collaborate with HR for staffing and with Admins for access decisions."
+      "Managers act as team leaders responsible for supervising employee activity, ensuring proper task distribution, monitoring performance, and guiding workflow execution. They play a strategic role in maintaining both productivity and team morale."
     ],
     "color": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    "size": 114
+    "size": 84
   },
   {
     "side": "left",
@@ -41,11 +38,10 @@
     "path": "hr",
     "glowColor": "#FFBF00",
     "description": [
-      "HR personnel manage the human side of the platform — employee records, organizational structure, compliance policies, and routine employee interactions.",
-      "They oversee recruitment processes, onboarding workflows, attendance monitoring, leave approvals, documentation management, and employee support. HR ensures that all workforce-related procedures adhere to company guidelines and legal requirements."
+      "HR personnel manage the human side of the platform — employee records, organizational structure, compliance policies, and routine employee interactions."
     ],
     "color": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-    "size": 70
+    "size": 60
   },
   {
     "side": "left",
@@ -53,11 +49,10 @@
     "path": "guest",
     "glowColor": "#B0D8C4",
     "description": [
-      "Guests have restricted, read-only visibility across selected areas of the system. This role is primarily intended for demonstrations, evaluations, or temporary access where no changes are allowed. Guests can explore the interface, preview workflows, and understand how the platform operates without interacting with sensitive data.",
-      "They do not possess permissions to edit, delete, or create records, ensuring system safety while offering a functional overview. This makes the Guest role ideal for onboarding sessions, demos to stakeholders, and providing safe-access environments for training purposes."
+      "Guests have restricted, read-only visibility across selected areas of the system. This role is primarily intended for demonstrations, evaluations, or temporary access where no changes are allowed. Guests can explore the interface, preview workflows, and understand how the platform operates without interacting with sensitive data."
     ],
     "color": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-    "size": 96
+    "size": 76
   },
   {
     "side": "right",
@@ -65,10 +60,9 @@
     "path": "superuser",
     "glowColor": "#BF40BF",
     "description": [
-      "The Superuser holds the highest level of authority within the platform, functioning as the ultimate system controller. This role bypasses most permission restrictions and is responsible for managing deep-level configurations that affect the entire ecosystem.",
-      "Superusers can modify core settings, implement structural changes, integrate external systems, adjust security policies, override user permissions, and troubleshoot at the infrastructure layer. They serve as the primary architects who ensure the stability, scalability, and compliance of the entire application."
+      "The Superuser holds the highest level of authority within the platform, functioning as the ultimate system controller. This role bypasses most permission restrictions and is responsible for managing deep-level configurations that affect the entire ecosystem."
     ],
     "color": "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
-    "size": 92
+    "size": 72
   }
 ]

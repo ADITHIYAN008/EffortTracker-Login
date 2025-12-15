@@ -1,16 +1,72 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { FaRegCalendar } from "react-icons/fa";
+import { FaRegCalendar, FaUsersCog } from "react-icons/fa";
 import { FiCoffee } from "react-icons/fi";
 import { GoPerson } from "react-icons/go";
-import { LuLayoutDashboard } from "react-icons/lu";
+import { LuCirclePlus, LuLayoutDashboard } from "react-icons/lu";
 import { TbLogout2, TbReportSearch } from "react-icons/tb";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import { AuthContext } from "../../context/AuthContext";
+
+const menu = [
+  {
+    label: "Dashboard",
+    icon: <LuLayoutDashboard />,
+    path: "/dashboard",
+    roles: ["Admin", "Facilitator", "Manager", "Employee", "TA", "Developer"],
+  },
+  {
+    label: "User Management",
+    icon: <FaUsersCog />,
+    path: "/user-management",
+    roles: ["Admin"],
+  },
+  {
+    label: "Calendar",
+    icon: <FaRegCalendar />,
+    path: "/calendar",
+    roles: ["Manager", "Facilitator", "Employee", "TA", "Developer"],
+  },
+  {
+    label: "Team",
+    icon: <BsFillPeopleFill />,
+    path: "/team",
+    roles: ["Manager", "Employee"],
+  },
+
+  {
+    label: "Batches",
+    icon: <BsFillPeopleFill />,
+    path: "/batches",
+    roles: ["Facilitator"],
+  },
+  {
+    label: "Batch Creation",
+    icon: <LuCirclePlus />,
+    path: "/batch-creation",
+    roles: ["Facilitator"],
+  },
+  {
+    label: "Profile",
+    icon: <GoPerson />,
+    path: "/profile",
+    roles: ["Manager", "Employee", "TA", "Facilitator", "Developer"],
+  },
+  {
+    label: "Reports",
+    icon: <TbReportSearch />,
+    path: "/reports",
+    roles: ["Manager", "Employee", "Facilitator"],
+  },
+];
 
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useContext(AuthContext);
+
+  const filteredMenu = menu.filter((item) => item.roles.includes(user?.role));
 
   const current = location.pathname;
 
@@ -18,14 +74,6 @@ function Sidebar() {
     Cookies.remove("token");
     navigate("/auth/login");
   };
-
-  const menu = [
-    { label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
-    { label: "Calendar", icon: <FaRegCalendar />, path: "/calendar" },
-    { label: "Team", icon: <BsFillPeopleFill />, path: "/team" },
-    { label: "Profile", icon: <GoPerson />, path: "/profile" },
-    { label: "Reports", icon: <TbReportSearch />, path: "/reports" },
-  ];
 
   return (
     <div className="w-56 border-r-[1px] border-black/30 h-screen py-2 flex flex-col justify-between">
@@ -39,7 +87,7 @@ function Sidebar() {
         </div>
 
         <div className="flex flex-col gap-2 items-center p-3 text-center">
-          {menu.map((item, index) => {
+          {filteredMenu.map((item, index) => {
             const isActive = current.startsWith(item.path);
 
             return (
