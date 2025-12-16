@@ -5,6 +5,7 @@ import PlanetsData from "../../json/Planets.json";
 import { LoginModal } from "./LoginModal";
 import { Planet } from "./Planet";
 import { ThemeContext } from "../context/ThemeContext";
+import ThemeToggle from "../context/ThemeToggle";
 
 const icons = import.meta.glob("../assets/*.png", { eager: true });
 
@@ -49,14 +50,19 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen  bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 dark:text-white">
+    <div className="relative w-full min-h-screen  bg-gradient-to-br z-20 from-slate-950 via-slate-900 to-slate-950  dark:text-white">
       <BackgroundStars />
+      <div className="fixed top-6 right-6 z-50 pointer-events-auto">
+        <ThemeToggle />
+      </div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] 2xl:w-[600px] 2xl:h-[600px] rounded-full border border-white/5" />
+
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] 2xl:w-[580px] 2xl:h-[580px] rounded-full border border-white/3" />
       <div className="absolute bottom-30 right-20  text-white w-100 h-auto">
-        <h2 className="font-bold text-xl 2xl:text-2xl mb-4 text-blue-300/70">
+        <h2 className="font-bold text-xl dark:text-purple-600 2xl:text-2xl mb-4 text-blue-300/70">
           In the TCS Universe, Every Effort is a Star.
         </h2>
+
         <div className="flex gap-2 flex-col text-sm text-white/20">
           <p>
             Just as planets revolve around the sun, every employee’s effort

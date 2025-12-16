@@ -3,6 +3,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FiBell, FiSearch } from "react-icons/fi";
 import { AuthContext } from "../../context/AuthContext";
 import { GoDotFill } from "react-icons/go";
+import ThemeToggle from "../../context/ThemeToggle";
 
 function Topbar() {
   const { user } = useContext(AuthContext);
@@ -45,6 +46,8 @@ function Topbar() {
       </div>
 
       <div className="flex gap-6 items-center">
+        <ThemeToggle />
+
         <div ref={notifRef} className="relative">
           <button
             onClick={() => {

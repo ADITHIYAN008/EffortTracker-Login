@@ -87,70 +87,63 @@ function FacilitatorDashboard() {
             </div>
           </div>
         </div>
-        <div className="w-[33%] border rounded-2xl shadow-2xs border-black/20 p-6">
-          <h2 className="text-lg font-semibold">Recent Activity</h2>
-          <div className="mt-3 ml-3 flex flex-col gap-6">
-            <div className="flex gap-2">
-              <IoIosRedo size={20} className="mt-1.5 text-blue-500" />
-              <div className="">
-                <h2 className="text-sm">Batch IGNITE-24-B created</h2>
-                <h3 className="text-xs text-black/50">2 hours ago</h3>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <IoIosRedo size={20} className="mt-1.5 text-blue-500" />
-              <div className="">
-                <h2 className="text-sm">
-                  Attendance update for Batch IGNITE-23-A
-                </h2>
-                <h3 className="text-xs text-black/50">5 hours ago</h3>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <IoIosRedo size={20} className="mt-1.5 text-blue-500" />
-              <div className="">
-                <h2 className="text-sm">Assessment scheduled for Week 4</h2>
-                <h3 className="text-xs text-black/50">1 day ago</h3>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <IoIosRedo size={20} className="mt-1.5 text-blue-500" />
-              <div className="">
-                <h2 className="text-sm">Batch IGNITE-22 Completed</h2>
-                <h3 className="text-xs text-black/50">2 days ago</h3>
-              </div>
-            </div>
+        <div className="border w-[33%] border-slate-200 shadow-sm p-6 rounded-2xl bg-white">
+          <h2 className="text-lg font-semibold text-slate-800">
+            Quick Actions
+          </h2>
+
+          <div className="mt-5 flex flex-col gap-3">
+            <Link
+              to="/batch-creation"
+              className="
+        border border-slate-200
+        bg-white
+        hover:bg-slate-50
+        transition
+        p-3
+        flex items-center gap-3
+        rounded-xl
+        text-slate-700
+      "
+            >
+              <MdOutlineCreateNewFolder size={22} className="text-slate-600" />
+              <h2>Create New Batch</h2>
+            </Link>
+
+            <Link
+              to="/batches"
+              className="
+        border border-slate-200
+        bg-white
+        hover:bg-slate-50
+        transition
+        p-3
+        flex items-center gap-3
+        rounded-xl
+        text-slate-700
+      "
+            >
+              <IoEyeOutline size={22} className="text-slate-600" />
+              <h2>View All Batches</h2>
+            </Link>
+
+            <Link
+              to="/reports"
+              className="
+        border border-slate-200
+        bg-white
+        hover:bg-slate-50
+        transition
+        p-3
+        flex items-center gap-3
+        rounded-xl
+        text-slate-700
+      "
+            >
+              <TbDownload size={22} className="text-slate-600" />
+              <h2>Download Batch Report</h2>
+            </Link>
           </div>
-        </div>
-      </div>
-      <div className="border border-black/20 shadow-2xs p-6 rounded-2xl mt-5">
-        <h2 className="text-lg font-semibold">Quick Actions</h2>
-        <div className="mt-5 flex justify-between">
-          <Link
-            to="/batch-creation"
-            className="bg-blue-500 w-[24%] cursor-pointer hover:bg-blue-400 p-3 flex items-center gap-3 rounded-xl text-white"
-          >
-            <MdOutlineCreateNewFolder size={23} />
-            <h2>Create New Batch</h2>
-          </Link>
-          <Link
-            to="/batches"
-            className="bg-slate-700 w-[24%] cursor-pointer hover:bg-slate-600 p-3 flex items-center gap-3 rounded-xl text-white"
-          >
-            <IoEyeOutline size={23} />
-            <h2>View All Batches</h2>
-          </Link>
-          <div className="bg-green-600 w-[24%] cursor-pointer hover:bg-green-500 p-3 flex items-center gap-3 rounded-xl text-white">
-            <LuUpload size={23} />
-            <h2>Upload Batch Schedule</h2>
-          </div>
-          <Link
-            to="/reports"
-            className="bg-purple-600 cursor-pointer hover:bg-purple-500 w-[24%] p-3 flex items-center gap-3 rounded-xl text-white"
-          >
-            <TbDownload size={23} />
-            <h2>Download Batch Report</h2>
-          </Link>
         </div>
       </div>
     </div>

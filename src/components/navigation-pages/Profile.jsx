@@ -31,10 +31,6 @@ function Profile() {
             <h2 className="text-2xl font-semibold">{user.name}</h2>
             <div className="flex items-center">
               <h2 className="text-sm text-black/50">{profile.role}</h2>
-              <BsDot className="text-black/50" size={22} />
-              <h2 className="text-sm text-black/50">
-                {profile.department} Department
-              </h2>
             </div>
             <div className="flex mt-2 gap-5">
               <div className="flex text-sm gap-2 items-center">
@@ -108,17 +104,13 @@ function Profile() {
                 ? "0.40rem"
                 : activeTab === "Career History"
                 ? "6.8rem"
-                : activeTab === "Achievements"
-                ? "15.2rem"
-                : "23rem",
+                : "",
             width:
               activeTab === "Overview"
                 ? "6rem"
                 : activeTab === "Career History"
                 ? "7rem"
-                : activeTab === "Achievements"
-                ? "7rem"
-                : "7rem",
+                : "",
           }}
         ></div>
 
@@ -139,30 +131,10 @@ function Profile() {
         >
           Career History
         </h2>
-
-        <h2
-          onClick={() => setActiveTab("Achievements")}
-          className={`cursor-pointer py-3  rounded-xl px-4 relative z-10 ${
-            activeTab === "Achievements" && "text-white"
-          }`}
-        >
-          Achievements
-        </h2>
-
-        <h2
-          onClick={() => setActiveTab("Performance")}
-          className={`cursor-pointer py-2 rounded-xl px-4 relative z-10 ${
-            activeTab === "Performance" && "text-white"
-          }`}
-        >
-          Performance
-        </h2>
       </div>
       <div className="mt-5">
         {activeTab === "Overview" && <Overview />}
         {activeTab === "Career History" && <CareerHistory />}
-        {activeTab === "Achievements" && <Achievements />}
-        {activeTab === "Performance" && <Performance />}
       </div>
     </div>
   );

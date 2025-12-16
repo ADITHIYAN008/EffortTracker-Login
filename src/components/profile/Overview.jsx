@@ -74,10 +74,7 @@ function Overview() {
           <h2 className="text-black/50">Employee ID</h2>
           <h2>TCS - {profile.empId}</h2>
         </div>
-        <div className="flex border-b pb-3 border-black/10 justify-between">
-          <h2 className="text-black/50">Department</h2>
-          <h2>{profile.department}</h2>
-        </div>
+
         <div className="flex border-b pb-3 border-black/10 justify-between">
           <h2 className="text-black/50">Location</h2>
           <h2>{profile.location}</h2>

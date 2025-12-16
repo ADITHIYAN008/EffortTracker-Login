@@ -41,12 +41,7 @@ const menu = [
     path: "/batches",
     roles: ["Facilitator"],
   },
-  {
-    label: "Batch Creation",
-    icon: <LuCirclePlus />,
-    path: "/batch-creation",
-    roles: ["Facilitator"],
-  },
+
   {
     label: "Profile",
     icon: <GoPerson />,

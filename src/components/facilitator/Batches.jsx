@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiEye, FiEdit2, FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { batches as initialBatches } from "../../../json/Batches";
+
+import { getBatches } from "../../api/get/batches";
+import { createBatch } from "../../api/post/batches";
+import { updateBatch } from "../../api/put/batches";
+
 import BatchDetailsModal from "./modal/BatchDetailsModal";
-import { Bath } from "lucide-react";
-import BatchOverview from "../admin/modal/BatchOverview";
+import AddBatchModal from "./modal/AddBatchModal";
 
 function Batches() {
   const BATCHES_PER_PAGE = 6;
+  const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [batches, setBatches] = useState(initialBatches);
+  const [batches, setBatches] = useState([]);
   const [selectedBatch, setSelectedBatch] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mode, setMode] = useState("view");
@@ -17,6 +21,10 @@ function Batches() {
   const [domainFilter, setDomainFilter] = useState("All");
   const [dateFilter, setDateFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    getBatches().then((res) => setBatches(res.data));
+  }, []);
 
   const filteredBatches = batches.filter((batch) => {
     const search = searchTerm.toLowerCase();
@@ -49,12 +57,30 @@ function Batches() {
 
   return (
     <div className="p-4 space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Batch Management</h1>
-        <p className="text-sm text-black/50">
-          View and manage all Ignite batches
-        </p>
+      <div className="flex justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">Batch Management</h1>
+          <p className="text-sm text-black/50">
+            View and manage all Ignite batches
+          </p>
+        </div>
+        <button
+          className="mr-10 bg-blue-400 px-6 rounded-xl text-white hover:bg-blue-500 cursor-pointer"
+          onClick={() => setOpen(true)}
+        >
+          Add Batch
+        </button>
       </div>
+
+      {open && (
+        <AddBatchModal
+          onClose={() => setOpen(false)}
+          onAdd={async (batch) => {
+            await createBatch(batch);
+            setBatches((prev) => [...prev, batch]);
+          }}
+        />
+      )}
 
       <div className="bg-white border border-black/10 rounded-xl p-4">
         <h3 className="text-sm font-medium mb-3">Filters</h3>
@@ -98,28 +124,6 @@ function Batches() {
             </select>
           </div>
 
-          {/* DOMAIN */}
-          <div>
-            <label className="text-xs font-medium text-black/60 mb-1 block">
-              Domain
-            </label>
-            <select
-              value={domainFilter}
-              onChange={(e) => {
-                setDomainFilter(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="w-full border rounded-md px-3 py-2 text-sm"
-            >
-              <option value="All">All Domains</option>
-              <option value="Full Stack">Full Stack</option>
-              <option value="Java">Java</option>
-              <option value="AI / ML">AI / ML</option>
-              <option value="Cloud">Cloud</option>
-              <option value="Data Engineering">Data Engineering</option>
-            </select>
-          </div>
-
           {/* DATE */}
           <div>
             <label className="text-xs font-medium text-black/60 mb-1 block">
@@ -140,9 +144,7 @@ function Batches() {
         <table className="w-full text-sm">
           <thead className="bg-gray-50 text-left">
             <tr>
-              <th className="px-4 py-3">Batch Code</th>
               <th className="px-4 py-3">Batch Name</th>
-              <th className="px-4 py-3">Domain</th>
               <th className="px-4 py-3">Start Date</th>
               <th className="px-4 py-3">End Date</th>
               <th className="px-4 py-3">Status</th>
@@ -158,9 +160,8 @@ function Batches() {
                 onClick={() => setSelectedBatch(batch)}
                 className="border-b hover:bg-black/2 cursor-pointer border-black/10"
               >
-                <td className="px-4 py-4 font-medium">{batch.code}</td>
                 <td className="px-4 py-4">{batch.name}</td>
-                <td className="px-4 py-4">{batch.domain}</td>
+
                 <td className="px-4 py-4">{batch.startDate}</td>
                 <td className="px-4 py-4">{batch.endDate}</td>
                 <td className="px-4 py-4">
@@ -230,7 +231,7 @@ function Batches() {
           </div>
         </div>
       </div>
-      <BatchOverview batch={selectedBatch} />
+      {/* <BatchOverview batch={selectedBatch} /> */}
 
       {isModalOpen && selectedBatch && (
         <BatchDetailsModal
@@ -240,7 +241,8 @@ function Batches() {
             setIsModalOpen(false);
             setSelectedBatch(null);
           }}
-          onUpdateBatch={(updatedBatch) => {
+          onUpdateBatch={async (updatedBatch) => {
+            await updateBatch(updatedBatch);
             setBatches((prev) =>
               prev.map((b) => (b.code === updatedBatch.code ? updatedBatch : b))
             );

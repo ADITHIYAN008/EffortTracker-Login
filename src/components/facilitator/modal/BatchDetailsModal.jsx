@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
+import { getBatchStatus } from "../../../util/getBatchStatus";
 
 function BatchDetailsModal({ mode, batch, onClose, onUpdateBatch }) {
   const isView = mode === "view";
@@ -21,7 +22,13 @@ function BatchDetailsModal({ mode, batch, onClose, onUpdateBatch }) {
   };
 
   const handleSubmit = () => {
-    onUpdateBatch(formData);
+    const updatedStatus = getBatchStatus(formData.startDate, formData.endDate);
+
+    onUpdateBatch({
+      ...formData,
+      status: updatedStatus,
+    });
+
     onClose();
   };
 
@@ -46,27 +53,8 @@ function BatchDetailsModal({ mode, batch, onClose, onUpdateBatch }) {
           </button>
         </div>
 
-        {/* CONTENT */}
         <div className="p-6 space-y-5">
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm text-black/70">Batch Code</label>
-              <input
-                name="code"
-                disabled
-                value={formData.code}
-                className="w-full h-10 border rounded-md px-3 text-sm bg-gray-100"
-              />
-            </div>
-            <div>
-              <label className="text-sm text-black/70">Trainees Enrolled</label>
-              <input
-                value={formData.trainees}
-                disabled
-                className="w-full h-10 border rounded-md px-3 text-sm bg-gray-100"
-              />
-            </div>
-
             <div>
               <label className="text-sm text-black/70">Batch Name</label>
               <input
@@ -76,23 +64,6 @@ function BatchDetailsModal({ mode, batch, onClose, onUpdateBatch }) {
                 onChange={handleChange}
                 className="w-full h-10 border rounded-md px-3 text-sm"
               />
-            </div>
-
-            <div>
-              <label className="text-sm text-black/70">Domain</label>
-              <select
-                name="domain"
-                disabled={isView}
-                value={formData.domain}
-                onChange={handleChange}
-                className="w-full h-10 border rounded-md px-3 text-sm"
-              >
-                <option>Full Stack</option>
-                <option>Java</option>
-                <option>AI / ML</option>
-                <option>Cloud</option>
-                <option>Data Engineering</option>
-              </select>
             </div>
 
             <div>
@@ -117,21 +88,6 @@ function BatchDetailsModal({ mode, batch, onClose, onUpdateBatch }) {
                 onChange={handleChange}
                 className="w-full h-10 border rounded-md px-3 text-sm"
               />
-            </div>
-            <div>
-              <label className="text-sm text-black/70">Status</label>
-              <select
-                name="status"
-                disabled={isView}
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full h-10 border rounded-md px-3 text-sm"
-              >
-                <option>Upcoming</option>
-                <option>Ongoing</option>
-                <option>Completed</option>
-                <option>Archived</option>
-              </select>
             </div>
           </div>
 

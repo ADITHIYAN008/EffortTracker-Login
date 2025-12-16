@@ -3,6 +3,8 @@ import Login from "./login/Login";
 import ProtectedRoutes from "./util/ProtectedRoutes";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Unauthorized from "./components/unauthorized/Unauthorized";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Dashboard from "./components/navigation-pages/Dashboard";
 import Calendar from "./components/navigation-pages/Calendar";
@@ -11,7 +13,7 @@ import Profile from "./components/navigation-pages/Profile";
 import Reports from "./components/navigation-pages/Report";
 import UserManagement from "./components/admin/UserManagement";
 import Batches from "./components/facilitator/Batches";
-import BatchCreation from "./components/facilitator/BatchCreation";
+
 import MacNotifications from "./components/mac-style-notification/MacNotifications";
 import { NotificationProvider } from "./context/NotificationContext";
 
@@ -19,7 +21,7 @@ function App() {
   return (
     <NotificationProvider>
       <MacNotifications />
-
+      <ToastContainer position="top-right" autoClose={3000} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/auth/login" replace />} />
@@ -50,7 +52,6 @@ function App() {
               <Route path="/reports" element={<Reports />} />
               <Route path="/user-management" element={<UserManagement />} />
               <Route path="/batches" element={<Batches />} />
-              <Route path="/batch-creation" element={<BatchCreation />} />
             </Route>
           </Route>
         </Routes>
